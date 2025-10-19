@@ -1,0 +1,33 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/acadlink
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update  # use "validate" in production
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+#   mail:
+#     host: smtp.gmail.com
+#     port: 587
+#     username: medecro277@gmail.com
+#     password: your-app-password
+#     properties:
+#       mail:
+#         smtp:
+#           auth: true
+#           starttls:
+#             enable: true
+
+jwt:
+  secret: acadlinkSecretKey
+  expiration: 86400000  # 1 day
