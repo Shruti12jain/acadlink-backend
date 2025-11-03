@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://db.sstlvmxjddkqfetxvmqz.supabase.co:5432/postgres
-    username: postgres
-    password: "Parasjain123+-"
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/acadlink}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres123}
     driver-class-name: org.postgresql.Driver
   flyway:
    enabled: true
