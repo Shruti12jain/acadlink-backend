@@ -1,7 +1,9 @@
-package com.acadlink.backend.security;
+package com.acadlink.backend.security.filterChains;
 
 import com.acadlink.backend.utils.*;
 import com.acadlink.backend.security.model.UserPrincipal;
+import com.acadlink.backend.security.service.CustomUserDetailsService;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
