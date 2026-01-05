@@ -11,4 +11,5 @@ public interface UniversityRepository extends JpaRepository<University, UUID> {
     Optional<University> findByEmail(String email);
     boolean existsByName(String name);
     boolean existsByEmail(String Email);
+   
 }
