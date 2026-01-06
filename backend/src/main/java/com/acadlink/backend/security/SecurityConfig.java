@@ -33,8 +33,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/health/**", "/auth/**").permitAll()
+                        .requestMatchers("/health/**", "/auth/university/**","/auth/login").permitAll()
                         .requestMatchers("/admin/**").hasRole("SUPER_ADMIN")
+                        .requestMatchers("/auth/student/**").hasRole("UNIVERSITY")
+                        .requestMatchers("/auth/professor/**").hasRole("UNIVERSITY")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
