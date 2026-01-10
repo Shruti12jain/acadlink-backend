@@ -26,15 +26,15 @@ public class StudentAuthController {
     }
     
 
-    @PostMapping("/signup")
-    public ResponseEntity<ApiResponse<StudentSignupResponse>> signup(
+    @PostMapping("/signup/under-university")
+    public ResponseEntity<ApiResponse<StudentSignupResponse>> signupunderuniversity(
             @RequestBody StudentSignupRequest request,
             @RequestParam UUID universityId
     )
-{    
+  {    
         try {
         
-            StudentSignupResponse response = studentAuthService.signup(request, universityId);
+            StudentSignupResponse response = studentAuthService.signupuniversity(request, universityId);
 
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(ApiResponse.success(
@@ -60,6 +60,44 @@ public class StudentAuthController {
                             ErrorCode.STUDENT_SIGNUP_INTERNAL_ERROR
                     ));
         }
-}
-}
+  }
 
+
+ @PostMapping("/signup/under-professor")
+    public ResponseEntity<ApiResponse<StudentSignupResponse>> signupunderprofessor(
+            @RequestBody StudentSignupRequest request,
+            @RequestParam UUID professorId
+            
+        
+    )
+  {    
+        try {
+        
+            StudentSignupResponse response = studentAuthService.signupprofessor(request, professorId);
+
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(ApiResponse.success(
+                            "Student registered successfully",
+                            response
+                    ));
+
+        } catch (IllegalArgumentException ex) {
+
+            //  Example: student email already exists or university does not exist
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ApiResponse.error(
+                            ex.getMessage(),
+                            ErrorCode.STUDENT_SIGNUP_VALIDATION_ERROR
+                    ));
+
+        } catch (Exception ex) {
+
+            //  Any unexpected server error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ApiResponse.error(
+                            "Something went wrong while creating student",
+                            ErrorCode.STUDENT_SIGNUP_INTERNAL_ERROR
+                    ));
+        }
+  }
+}
