@@ -38,6 +38,8 @@ public class SecurityConfig {
                         .requestMatchers("/auth/student/signup/under-university").hasRole("UNIVERSITY")
                         .requestMatchers("/auth/student/signup/under-professor").hasRole("PROFESSOR")
                         .requestMatchers("/auth/professor/**").hasRole("UNIVERSITY")
+                        .requestMatchers("/create/student/under-university").hasRole("UNIVERSITY")
+                        .requestMatchers("/create/student/under-professor").hasRole("PROFESSOR")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

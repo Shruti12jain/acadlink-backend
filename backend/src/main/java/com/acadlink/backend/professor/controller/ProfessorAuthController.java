@@ -2,6 +2,9 @@ package com.acadlink.backend.professor.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.acadlink.backend.professor.service.ProfessorAuthService;
+
+import jakarta.validation.Valid;
+
 import com.acadlink.backend.professor.dto.ProfessorSignupRequest;
 import com.acadlink.backend.professor.dto.ProfessorSignupResponse;
 import com.acadlink.backend.common.ApiResponse;
@@ -26,7 +29,7 @@ public class ProfessorAuthController {
    } 
    @PostMapping("/signup")
    public ResponseEntity<ApiResponse<ProfessorSignupResponse>> signup(
-           @RequestBody ProfessorSignupRequest request,
+           @Valid @RequestBody ProfessorSignupRequest request,
            @RequestParam UUID universityId
    )
 {
