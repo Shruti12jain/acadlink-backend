@@ -5,6 +5,9 @@ import com.acadlink.backend.common.ErrorCode;
 import com.acadlink.backend.university.dto.UniversitySignupRequest;
 import com.acadlink.backend.university.dto.UniversitySignupResponse;
 import com.acadlink.backend.university.service.UniversityAuthService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +24,7 @@ public class UniversityAuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<UniversitySignupResponse>> signup(
-            @RequestBody UniversitySignupRequest request) {
+            @Valid @RequestBody UniversitySignupRequest request) {
 
         try {
             UniversitySignupResponse response = universityAuthService.signup(request);

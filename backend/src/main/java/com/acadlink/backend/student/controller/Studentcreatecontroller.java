@@ -1,47 +1,45 @@
 package com.acadlink.backend.student.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.acadlink.backend.student.service.StudentAuthService;
+import java.util.UUID;
 
-import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.acadlink.backend.common.ApiResponse;
 import com.acadlink.backend.common.ErrorCode;
 import com.acadlink.backend.student.dto.StudentSignupRequest;
 import com.acadlink.backend.student.dto.StudentSignupResponse;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import java.util.UUID;
+import com.acadlink.backend.student.service.StudentCreateService;
 
+import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/auth/student")
-public class StudentAuthController {
+@RequestMapping("/create/student")
+public class Studentcreatecontroller {
+     private final StudentCreateService studentCreateService;
 
-    private final StudentAuthService studentAuthService;
-
-    public StudentAuthController(StudentAuthService studentAuthService) {
-        this.studentAuthService = studentAuthService;
+    public Studentcreatecontroller(StudentCreateService studentCreateService) {
+        this.studentCreateService = studentCreateService;
     }
-    
 
-    @PostMapping("/signup/under-university")
-    public ResponseEntity<ApiResponse<StudentSignupResponse>> signupunderuniversity(
+    @PostMapping("/under-university")
+    public ResponseEntity<ApiResponse<StudentSignupResponse>> createunderuniversity(
             @Valid @RequestBody StudentSignupRequest request,
             @RequestParam UUID universityId
     )
   {    
         try {
         
-            StudentSignupResponse response = studentAuthService.signupuniversity(request, universityId);
+            StudentSignupResponse response = studentCreateService.createuniversity(request, universityId);
 
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(ApiResponse.success(
-                            "Student registered successfully",
+                            "Student created successfully",
                             response
                     ));
 
@@ -66,8 +64,8 @@ public class StudentAuthController {
   }
 
 
- @PostMapping("/signup/under-professor")
-    public ResponseEntity<ApiResponse<StudentSignupResponse>> signupunderprofessor(
+ @PostMapping("/under-professor")
+    public ResponseEntity<ApiResponse<StudentSignupResponse>> createunderprofessor(
             @Valid @RequestBody StudentSignupRequest request,
             @RequestParam UUID professorId
             
@@ -76,11 +74,11 @@ public class StudentAuthController {
   {    
         try {
         
-            StudentSignupResponse response = studentAuthService.signupprofessor(request, professorId);
+            StudentSignupResponse response = studentCreateService.createprofessor(request, professorId);
 
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(ApiResponse.success(
-                            "Student registered successfully",
+                            "Student created successfully",
                             response
                     ));
 
@@ -104,3 +102,5 @@ public class StudentAuthController {
         }
   }
 }
+    
+
