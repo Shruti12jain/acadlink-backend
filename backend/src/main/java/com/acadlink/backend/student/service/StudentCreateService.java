@@ -48,12 +48,14 @@ public class StudentCreateService {
      // create new student
     Student student = new Student();
     student.setName(request.name());
+    String password;
     if(request.password()==null){
        PasswordGenerator passwordObj= new PasswordGenerator();
-       String password =passwordObj.generatePassword(8);
+       password =passwordObj.generatePassword(8);
        student.setPassword(passwordEncoder.encode(password));
        
     }else {
+         password=request.password();
          student.setPassword(passwordEncoder.encode(request.password()));
     }
     
@@ -62,7 +64,7 @@ public class StudentCreateService {
     student.setEmail(request.email());
     // save student
     Student saved = studentRepository.save(student);
-    emailService.sendEmail(request.email(), "Acadlink Password ", "Your password is"+ student.getPassword());
+    emailService.sendEmail(request.email(), "Acadlink Password ", "Your password is "+ password);
     // associate student with university
     University university = UniversityRepository.findById(universityId)
             .orElseThrow(() -> new IllegalArgumentException("University not found"));
@@ -90,19 +92,24 @@ public class StudentCreateService {
      // create new student
     Student student = new Student();
     student.setName(request.name());
+    String password;
     if(request.password()==null){
        PasswordGenerator passwordObj= new PasswordGenerator();
-       String password =passwordObj.generatePassword(8);
+       password =passwordObj.generatePassword(8);
+       System.out.println(password);
        student.setPassword(passwordEncoder.encode(password));
        
     }else {
+        password=request.password();
+        System.out.println(password);
          student.setPassword(passwordEncoder.encode(request.password()));
     }
     
     student.setEmail(request.email());
     // save student
     Student saved = studentRepository.save(student);
-    emailService.sendEmail(request.email(), "Acadlink Password ", "Your password is"+ student.getPassword());
+    System.out.println(password);
+    emailService.sendEmail(request.email(), "Acadlink Password ", "Your password is "+ password);
     //associate student with professor 
     Professor professor = ProfessorRepository.findById(professorId)
             .orElseThrow(() -> new IllegalArgumentException("Professor not found"));

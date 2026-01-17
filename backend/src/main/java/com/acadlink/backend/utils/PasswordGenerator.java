@@ -23,12 +23,14 @@ public class PasswordGenerator {
             password.append(ALL.charAt(random.nextInt(ALL.length())));
         }
 
-
+        
         return password.chars()
                 .mapToObj(c -> (char) c)
                 .sorted((a, b) -> random.nextInt(3) - 1)
                 .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
                 .toString();
     }
+
+    
          
 }

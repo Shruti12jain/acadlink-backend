@@ -21,17 +21,17 @@ spring:
       hibernate:
         format_sql: true
 
-#   mail:
-#     host: smtp.gmail.com
-#     port: 587
-#     username: acadlink07@gmail.com
-#     password: vvbh dugi urcw ovqu
-#     properties:
-#       mail:
-#         smtp:
-#           auth: true
-#           starttls:
-#             enable: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: acadlink07@gmail.com
+    password: vvbhdugiurcwovqu
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 jwt:
   secret: acadlinkSecretKey
