@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.acadlink.backend.common.ApiResponse;
 import com.acadlink.backend.common.ErrorCode;
+import com.acadlink.backend.student.dto.BulkUploadResponse;
 import com.acadlink.backend.student.dto.StudentSignupRequest;
 import com.acadlink.backend.student.dto.StudentSignupResponse;
 import com.acadlink.backend.student.service.StudentCreateService;
@@ -66,6 +68,7 @@ public class Studentcreatecontroller {
 
  @PostMapping("/under-professor")
     public ResponseEntity<ApiResponse<StudentSignupResponse>> createunderprofessor(
+
             @Valid @RequestBody StudentSignupRequest request,
             @RequestParam UUID professorId
             
@@ -101,6 +104,40 @@ public class Studentcreatecontroller {
                     ));
         }
   }
+
+
+  @PostMapping("/upload/under-university")
+  public  ResponseEntity<ApiResponse<BulkUploadResponse>> UploadUnderUnivesity( @RequestParam UUID universityId,@RequestParam("file") MultipartFile file) {
+     
+        try {
+                BulkUploadResponse response = studentCreateService.uploadUnderUniversity(file, universityId);
+
+                return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(ApiResponse.success(
+                            "Students created successfully",
+                            response
+                    ));
+                
+        } catch (IllegalArgumentException ex) {
+
+            //  Example: student email already exists or university does not exist
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ApiResponse.error(
+                            ex.getMessage(),
+                            ErrorCode.STUDENT_SIGNUP_VALIDATION_ERROR
+                    ));
+                }
+        catch (Exception e) {
+             //  Any unexpected server error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ApiResponse.error(
+                            "Something went wrong while creating student",
+                            ErrorCode.STUDENT_SIGNUP_INTERNAL_ERROR
+                    ));    
+        }
+
+  }
+  
 }
     
 
